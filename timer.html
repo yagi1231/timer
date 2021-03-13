@@ -1,0 +1,103 @@
+<!DOCTYPE>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>StopWatch</title>
+  <link rel="stylesheet" href="timer.css">
+</head>
+<body>
+ <div id="container">
+   <p id=header>ストップウォッチ</p>
+    <p class="time">00:00:00:0</p>
+    <form>
+        <input type="button" value="Start" id="start" class="btn">
+        <input type="button" value="Stop" id="stop"class="btn" disabled>
+        <input type="button" value="Clear" id="reset"class="btn" disabled>
+    </form>
+</div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
+<script>
+$(function() {
+ 
+   
+    $('#container #start').click(function() {
+     
+        timer = setInterval("countUp()", 100);
+        $(this).attr('disabled', true);
+        $('#container #stop').removeAttr('disabled');
+    });
+ 
+ 
+   
+    $('#container #stop').click(function() {
+        clearInterval(timer);
+        $(this).attr('disabled', true);
+        $('#container #reset').removeAttr('disabled');
+       
+    });
+  
+    $('#container #reset').click(function() {
+        msec = 0;
+        sec  = 0;
+        min  = 0;
+        hour = 0;
+        $('#container .time').html('00:00:00:0');
+        clearInterval(timer);
+        $(this).attr('disabled', true);
+        $('#container #stop').attr('disabled',true);
+        $('#container #start').removeAttr('disabled');
+    });
+});
+ 
+msec = 0;
+sec  = 0;
+min  = 0;
+hour = 0;
+ 
+function countUp ()
+{
+    msec += 1;
+ 
+    if (msec > 9) {
+        msec = 0;
+        sec += 1;
+    }
+ 
+    if (sec > 59) {
+        sec = 0;
+        min += 1;
+    }
+ 
+    if (min > 59) {
+        min = 0;
+        hour += 1;
+    }
+ msecNumber = msec;
+  
+    if (sec < 10) {
+        secNumber = '0' + sec.toString();
+    } else {
+        secNumber = sec;
+    }
+ 
+
+    if (min < 10) {
+        minNumber = '0' + min.toString();
+    } else {
+        minNumber = min;
+    }
+ 
+    if (hour < 10) {
+        hourNumber = '0' + hour.toString();
+    } else {
+        hourNumber = hour;
+    }
+ 
+   
+    $('#container .time').html(hourNumber + ':' + minNumber + ':' + secNumber+ ':' + msecNumber);
+}
+</script>
+
+</body>
+</html>
